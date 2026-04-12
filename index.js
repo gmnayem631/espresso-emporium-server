@@ -81,6 +81,20 @@ async function run() {
     });
 
     // users related APIs
+
+    // get users
+    app.get("/users", async (req, res) => {
+      const result = await usersCollection.find().toArray();
+      res.send(result);
+    });
+
+    // delete user
+    app.delete("/users/:id", async (req, res) => {
+      const query = { _id: new ObjectId(req.params.id) };
+      const result = usersCollection.deleteOne(query);
+      res.send(result);
+    });
+
     app.post("/users", async (req, res) => {
       const userProfile = req.body;
       const result = await usersCollection.insertOne(userProfile);
